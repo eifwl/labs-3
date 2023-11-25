@@ -1,50 +1,31 @@
-english_letters = "abcdefghijklmnopqrstuvwxyz"
-ukr_letters = "абвгдеєжзиіїйклмнопрстуфхцчшщьюя"
+class players:
+    def __init__(self, age, height, weight, speed):
+        self.age = age
+        self.height = height
+        self.weight = weight
+        self.speed = speed
+
+    def setings(self):
+        print(
+            f'його вік {self.age} років, його ріст {self.height} см, його вага {self.weight} кг, його швидкість {self.speed} км/год')
 
 
-def main():
-    text = input("Введіть текст: ").lower()
-    runtype = input("Виберіть як запустити програму 1 2: ")
+class players_1(players):
+    def __init__(self, age, height, weight, speed, defence):
+        super().__init__(age, height, weight, speed)
+        self.defence = defence
 
-    chars = ""
+    def setings(self):
+        print(
+            f'його вік {self.age} років, його ріст {self.height} см, його вага {self.weight} кг, його швидкість {self.speed} км/год, його захист {self.defence} гравців')
 
-    if runtype == "1":
-        lang = input("Оберіть мову us ua: ")
-        chardict = {}
 
-        if lang == "us":
-            chars = english_letters
-        elif lang == "ua":
-            chars = ukr_letters
-        else:
-            print("Ви ввели неправильну мову")
-            main()
+class players_2(players):
+    pass
 
-        print(f"Кількість символів: len(text)")
 
-        for char in chars.lower():
-            chardict[char] = 0
-
-        for char in text:
-            if char in chars:
-                chardict[char] += 1
-
-        for key, value in chardict.items():
-            print(f"Кількість букв '{key}': {value}")
-
-    elif runtype == "2":
-        words = text.split(" ")
-
-        dictlist = [word.lower() for word in words if len(word) > 3]
-        dictlist = sorted(set(dictlist))
-
-        print(dictlist)
-
-        for num, word in enumerate(dictlist):
-            print(f"{num+1}. {word}")
-
-    else:
-        main()
-
-main()
+p1 = players_1('22', '185', '80', '35', '8/10')
+p1.setings()
+p2 = players_2('21', '179', '59', '34', )
+p2.setings()
 
