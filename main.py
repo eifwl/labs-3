@@ -1,67 +1,50 @@
-from tkinter import *
+english_letters = "abcdefghijklmnopqrstuvwxyz"
+ukr_letters = "абвгдеєжзиіїйклмнопрстуфхцчшщьюя"
 
 
-class Main(Frame):
-    def __init__(self, root):
-        super(Main, self).__init__(root)
-        self.build()
+def main():
+    text = input("Введіть текст: ").lower()
+    runtype = input("Виберіть як запустити програму 1 2: ")
 
-    def build(self):
-        self.formula = "0"
-        self.lbl = Label(text=self.formula, font=("Times, serif", 58, "bold"), bg="#098", foreground="#FCF")
+    chars = ""
 
-        self.lbl.place(x=20, y=50)
+    if runtype == "1":
+        lang = input("Оберіть мову us ua: ")
+        chardict = {}
 
-        btns = [
-            "C", "DEL", "*", "=",
-            "1", "2", "3", "/",
-            "4", "5", "6", "+",
-            "7", "8", "9", "-",
-            "(", "0", ")", "X^2"
-        ]
-
-        x = 10
-        y = 140
-
-        for bt in btns:
-            com = lambda x=bt: self.logicalc(x)
-            Button(text=bt, bg="#FCC",
-                   font=("SketchItalic", 30),
-                   command=com).place(x=x, y=y,
-                                      width=116,
-                                      height=90)
-            x += 117
-            if x > 400:
-                x = 10
-                y += 81
-
-    def logicalc(self, operation):
-        if operation == "C":
-            self.formula = ""
-        elif operation == "DEL":
-            self.formula = self.formula[0:-1]
-        elif operation == "X^2":
-            self.formula = str((eval(self.formula))**2)
-        elif operation == "=":
-            self.formula = str(eval(self.formula))
+        if lang == "us":
+            chars = english_letters
+        elif lang == "ua":
+            chars = ukr_letters
         else:
-            if self.formula == "0":
-                self.formula = ""
-            self.formula += operation
-        self.update()
+            print("Ви ввели неправильну мову")
+            main()
 
-    def update(self):
-        if self.formula == "":
-            self.formula = "0"
-        self.lbl.configure(text=self.formula)
+        print(f"Кількість символів: len(text)")
 
+        for char in chars.lower():
+            chardict[char] = 0
 
-if __name__ == '__main__':
-    root = Tk()
-    root["bg"] = "#098"
-    root.geometry("485x560+250+250")
-    root.title("Калькулятор")
-    root.resizable(False, False)
-    app = Main(root)
-    app.pack()
-    root.mainloop()
+        for char in text:
+            if char in chars:
+                chardict[char] += 1
+
+        for key, value in chardict.items():
+            print(f"Кількість букв '{key}': {value}")
+
+    elif runtype == "2":
+        words = text.split(" ")
+
+        dictlist = [word.lower() for word in words if len(word) > 3]
+        dictlist = sorted(set(dictlist))
+
+        print(dictlist)
+
+        for num, word in enumerate(dictlist):
+            print(f"{num+1}. {word}")
+
+    else:
+        main()
+
+main()
+
